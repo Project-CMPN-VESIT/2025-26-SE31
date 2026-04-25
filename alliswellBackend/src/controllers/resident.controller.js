@@ -21,7 +21,7 @@ export const getAllResidents = async (req, res) => {
 export const updateResident = async (req, res) => {
   try {
     const resident = await Resident.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+      returnDocument: 'after',
       runValidators: true
     });
     if (!resident) return res.status(404).json({ status: 'fail', message: 'Resident not found' });

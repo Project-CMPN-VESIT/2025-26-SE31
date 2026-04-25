@@ -42,11 +42,16 @@ export const signup = asyncHandler(async (req, res) => {
 
     console.log("Verification Link:", emailLink);
     
-    await sendEmail(
-        email,
-        "Verify your email",
-        `Click here to verify: ${emailLink}`
-    );
+    try {
+        await sendEmail(
+            email,
+            "Verify your email",
+            `Click here to verify: ${emailLink}`
+        );
+    } catch (emailError) {
+        console.error("Email verification send failed:", emailError.message);
+        // We continue because the user record is already created
+    }
 
     res.status(201).json({
         success: true,
